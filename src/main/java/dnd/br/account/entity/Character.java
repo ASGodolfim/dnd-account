@@ -15,6 +15,8 @@ public class Character {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "account_username", nullable = false)
+    private String accountUsername;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -58,8 +60,9 @@ public class Character {
 
     public Character(){}
 
-    public Character(Long id, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMultiClass, String multiClassSubclass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    public Character(Long id,String accountUsername,  String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMultiClass, String multiClassSubclass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
         this.id = id;
+        this.accountUsername = accountUsername;
         this.name = name;
         this.strength = strength;
         this.constitution = constitution;

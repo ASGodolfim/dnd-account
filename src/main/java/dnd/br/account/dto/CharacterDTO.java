@@ -8,11 +8,12 @@ import java.util.List;
 
 @Getter
 @Setter
-@JsonPropertyOrder({"id","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
+@JsonPropertyOrder({"id","account_username","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
 public class CharacterDTO {
 
 
     private long id;
+    private String accountUsername;
     private String name;
     private Integer strength;
     private Integer constitution;
@@ -37,8 +38,9 @@ public class CharacterDTO {
     public CharacterDTO() {
     }
 
-    public CharacterDTO(long id, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    public CharacterDTO(long id,String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
         this.id = id;
+        this.accountUsername = accountUsername;
         this.name = name;
         this.strength = strength;
         this.constitution = constitution;
