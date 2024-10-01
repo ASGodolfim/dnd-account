@@ -5,10 +5,7 @@ import dnd.br.account.security.CharacterServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/character")
 @RestController
@@ -23,5 +20,11 @@ public class CharacterController {
     @Operation(summary = "Creates new Character", description = "Creates a new Character", tags = "Character")
     public CharacterDTO create(@RequestBody CharacterDTO character){
         return services.create(character);
+    }
+
+    @GetMapping(value = "/{id}")
+    @Operation(summary = "Find Character by ID", description = "Finds a character by account username and id", tags = "Character")
+    public CharacterDTO findById(@PathVariable(value = "id") Long id) throws Exception{
+        return services.findById(id);
     }
 }

@@ -32,7 +32,14 @@ public class CharacterServices {
         return dto;
     }
 
+    public CharacterDTO findById(Long id){
 
+        logger.info("Find a character by name");
+
+        var entity = repository.findById(id).orElseThrow();
+        CharacterDTO dto = Mapper.parseObj(entity, CharacterDTO.class);
+        return dto;
+    }
 
 
 
