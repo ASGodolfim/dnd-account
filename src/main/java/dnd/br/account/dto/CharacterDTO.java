@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@JsonPropertyOrder({"id","account_username","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
+@JsonPropertyOrder({"id","account_username","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "multiclass_level", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
 public class CharacterDTO {
 
 
@@ -28,6 +28,7 @@ public class CharacterDTO {
     private Boolean multiclass;
     private String characterMulticlass;
     private String multiclassSubclass;
+    private Integer multiclassLevel;
     private Integer life;
     private Integer armorClass;
     private Integer gold;
@@ -38,7 +39,7 @@ public class CharacterDTO {
     public CharacterDTO() {
     }
 
-    public CharacterDTO(long id,String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    public CharacterDTO(long id,String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
         this.id = id;
         this.accountUsername = accountUsername;
         this.name = name;
@@ -55,11 +56,15 @@ public class CharacterDTO {
         this.multiclass = multiclass;
         this.characterMulticlass = characterMulticlass;
         this.multiclassSubclass = multiclassSubclass;
+        this.multiclassLevel = multiclassLevel;
         this.life = life;
         this.armorClass = armorClass;
         this.gold = gold;
         this.armor = armor;
         this.weapon = weapon;
         this.treasure = treasure;
+    }
+
+    public CharacterDTO(Long id, String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Boolean multiclass, String characterMulticlass, String multiClassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
     }
 }

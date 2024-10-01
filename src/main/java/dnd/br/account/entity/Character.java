@@ -44,7 +44,9 @@ public class Character {
     @Column(name = "character_multiclass")
     private String characterMulticlass;
     @Column(name = "multiclass_subclass")
-    private String multiClassSubclass;
+    private String multiclassSubclass;
+    @Column(name = "multiclass_level")
+    private Integer multiclassLevel;
     @Column(nullable = false)
     private Integer life;
     @Column(name = "armor_class", nullable = false)
@@ -60,7 +62,7 @@ public class Character {
 
     public Character(){}
 
-    public Character(Long id,String accountUsername,  String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMultiClass, String multiClassSubclass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    public Character(Long id,String accountUsername,  String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
         this.id = id;
         this.accountUsername = accountUsername;
         this.name = name;
@@ -76,12 +78,16 @@ public class Character {
         this.classLevel = classLevel;
         this.multiclass = multiclass;
         this.characterMulticlass = characterMulticlass;
-        this.multiClassSubclass = multiClassSubclass;
+        this.multiclassSubclass = multiclassSubclass;
+        this.multiclassLevel = multiclassLevel;
         this.life = life;
         this.armorClass = armorClass;
         this.gold = gold;
         this.armor = armor;
         this.weapon = weapon;
         this.treasure = treasure;
+    }
+
+    public Character(long id, String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
     }
 }
