@@ -29,30 +29,36 @@ public class Character {
     private Integer intelligence;
     @Column(nullable = false)
     private Integer charisma;
-    @Column(nullable = false)
+    @Column(name = "character_level", nullable = false)
     private Integer characterLevel;
-    @Column(nullable = false)
+    @Column(name = "character_class", nullable = false)
     private String characterClass;
     @Column(nullable = false)
-    private String subClass;
-    @Column(nullable = false)
+    private String subclass;
+    @Column(name = "class_level", nullable = false)
     private Integer classLevel;
     @Column(nullable = false)
-    private Boolean multiClass;
-    private String characterMultiClass;
-    private String multiClassSubClass;
+    private Boolean multiclass;
+    @Column(name = "character_multiclass")
+    private String characterMulticlass;
+    @Column(name = "multiclass_subclass")
+    private String multiClassSubclass;
     @Column(nullable = false)
     private Integer life;
-    @Column(nullable = false)
+    @Column(name = "armor_class", nullable = false)
     private Integer armorClass;
+    @Column
     private Integer gold;
+    @Column
     private String armor;
+    @Column
     private List<String> weapon;
+    @Column
     private List<String> treasure;
 
     public Character(){}
 
-    public Character(Long id, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subClass, Integer classLevel, Boolean multiClass, String characterMultiClass, String multiClassSubClass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    public Character(Long id, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMultiClass, String multiClassSubclass, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
         this.id = id;
         this.name = name;
         this.strength = strength;
@@ -63,11 +69,11 @@ public class Character {
         this.charisma = charisma;
         this.characterLevel = characterLevel;
         this.characterClass = characterClass;
-        this.subClass = subClass;
+        this.subclass = subclass;
         this.classLevel = classLevel;
-        this.multiClass = multiClass;
-        this.characterMultiClass = characterMultiClass;
-        this.multiClassSubClass = multiClassSubClass;
+        this.multiclass = multiclass;
+        this.characterMulticlass = characterMulticlass;
+        this.multiClassSubclass = multiClassSubclass;
         this.life = life;
         this.armorClass = armorClass;
         this.gold = gold;
