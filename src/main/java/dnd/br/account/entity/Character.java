@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -89,5 +90,18 @@ public class Character {
     }
 
     public Character(long id, String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Character character = (Character) o;
+        return Objects.equals(id, character.id) && Objects.equals(accountUsername, character.accountUsername) && Objects.equals(name, character.name) && Objects.equals(strength, character.strength) && Objects.equals(constitution, character.constitution) && Objects.equals(dexterity, character.dexterity) && Objects.equals(wisdom, character.wisdom) && Objects.equals(intelligence, character.intelligence) && Objects.equals(charisma, character.charisma) && Objects.equals(characterLevel, character.characterLevel) && Objects.equals(characterClass, character.characterClass) && Objects.equals(subclass, character.subclass) && Objects.equals(classLevel, character.classLevel) && Objects.equals(multiclass, character.multiclass) && Objects.equals(characterMulticlass, character.characterMulticlass) && Objects.equals(multiclassSubclass, character.multiclassSubclass) && Objects.equals(multiclassLevel, character.multiclassLevel) && Objects.equals(life, character.life) && Objects.equals(armorClass, character.armorClass) && Objects.equals(gold, character.gold) && Objects.equals(armor, character.armor) && Objects.equals(weapon, character.weapon) && Objects.equals(treasure, character.treasure);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, accountUsername, name, strength, constitution, dexterity, wisdom, intelligence, charisma, characterLevel, characterClass, subclass, classLevel, multiclass, characterMulticlass, multiclassSubclass, multiclassLevel, life, armorClass, gold, armor, weapon, treasure);
     }
 }
