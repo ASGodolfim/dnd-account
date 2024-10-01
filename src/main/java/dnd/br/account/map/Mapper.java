@@ -17,7 +17,7 @@ public class Mapper {
                 .addMapping(CharacterDTO::getId, Character::setId);
     }
 
-    public static <O, D> D parseObk(O origin, Class<D> destination){
+    public static <O, D> D parseObj(O origin, Class<D> destination){
         return mapper.map(origin, destination);
     }
 
