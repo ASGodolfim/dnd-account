@@ -33,13 +33,13 @@ public class CharacterDTO {
     private Integer armorClass;
     private Integer gold;
     private String armor;
-    private List<String> weapon;
-    private List<String> treasure;
+    private String weapon;
+    private String treasure;
 
     public CharacterDTO() {
     }
 
-    public CharacterDTO(long id,String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    public CharacterDTO(long id,String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Integer classLevel, Boolean multiclass, String characterMulticlass, String multiclassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, String weapon, String treasure) {
         this.id = id;
         this.accountUsername = accountUsername;
         this.name = name;
@@ -65,6 +65,6 @@ public class CharacterDTO {
         this.treasure = treasure;
     }
 
-    public CharacterDTO(Long id, String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Boolean multiclass, String characterMulticlass, String multiClassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, List<String> weapon, List<String> treasure) {
+    public CharacterDTO(Long id, String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Boolean multiclass, String characterMulticlass, String multiClassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, String weapon, String treasure) {
     }
 }

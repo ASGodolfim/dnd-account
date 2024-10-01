@@ -19,7 +19,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false,length = 40, unique = true)
-    private String username;
+    private String user_name;
 
     @Column(nullable = false,length = 40)
     private String password;
@@ -33,9 +33,6 @@ public class User {
     @Column(nullable = false)
     private Integer age;
 
-    @Column(name = "character")
-    private List<String> characterName;
-
     @Column(name = "account_non_expired",nullable = false)
     private Boolean accountNonExpired;
 
@@ -44,6 +41,9 @@ public class User {
 
     @Column(name = "credentials_non_expired",nullable = false)
     private Boolean credentialsNonExpired;
+
+    @Column(nullable = false)
+    private Boolean enabled;
 
     public User(){}
 
@@ -57,12 +57,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(age, user.age) && Objects.equals(characterName, user.characterName) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(names, user.names);
+        return Objects.equals(id, user.id) && Objects.equals(user_name, user.user_name) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(age, user.age) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(enabled, user.enabled) && Objects.equals(names, user.names);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, name, email, age, characterName, accountNonExpired, accountNonLocked, credentialsNonExpired, names);
+        return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, names);
     }
 
     public List<String> getNames(){
