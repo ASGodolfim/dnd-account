@@ -1,0 +1,25 @@
+security:
+  jwt:
+    token:
+      secret-key: 53cr37
+      expire-length: 3600000
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/dnd-account
+    username: root
+    password: 1123581321asG!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+springdoc:
+  pathsToMatch:
+  swagger-ui:
+    use-root-path: true
+
+  application:
+    name: DnDAccountApplication
