@@ -1,5 +1,6 @@
 package dnd.br.account.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "characters")
+@JsonPropertyOrder({"id","account_username","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "multiclass_level", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
 public class Character {
 
     @Id
@@ -31,33 +33,33 @@ public class Character {
     private Integer intelligence;
     @Column(nullable = false)
     private Integer charisma;
-    @Column(name = "character_level", nullable = false)
-    private Integer characterLevel;
+    @Column(name = "character_level")
+    private Integer characterLevel = 0;
     @Column(name = "character_class", nullable = false)
     private String characterClass;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String subclass;
     @Column(name = "class_level", nullable = false)
     private Integer classLevel;
     @Column(nullable = false)
     private Boolean multiclass;
-    @Column(name = "character_multiclass")
+    @Column(name = "character_multiclass", nullable = true)
     private String characterMulticlass;
-    @Column(name = "multiclass_subclass")
+    @Column(name = "multiclass_subclass", nullable = true)
     private String multiclassSubclass;
-    @Column(name = "multiclass_level")
+    @Column(name = "multiclass_level", nullable = true)
     private Integer multiclassLevel;
-    @Column(nullable = false)
+    @Column
     private Integer life;
     @Column(name = "armor_class", nullable = false)
     private Integer armorClass;
-    @Column
-    private Integer gold;
-    @Column
+    @Column(nullable = true)
+    private Integer gold = 0;
+    @Column(nullable = true)
     private String armor;
-    @Column
+    @Column(nullable = true)
     private String weapon;
-    @Column
+    @Column(nullable = true)
     private String treasure;
 
     public Character(){}

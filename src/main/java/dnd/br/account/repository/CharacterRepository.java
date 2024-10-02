@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long> {
 
-    List<Character> findByUserame(String username);
+    List<CharacterDTO> findByAccountUsername(String username);
     CharacterDTO findByName(String name);
 }
