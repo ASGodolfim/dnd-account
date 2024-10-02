@@ -1,4 +1,4 @@
-package dnd.br.account.security;
+package dnd.br.account.services;
 
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
@@ -8,9 +8,7 @@ import dnd.br.account.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -127,7 +125,7 @@ public class CharacterServices {
 
         logger.info("Find a character by id");
 
-        var entity = repository.findById(id).orElseThrow();
+        var entity = repository.findById(id);
         return Mapper.parseObj(entity, CharacterDTO.class);
     }
 
@@ -156,6 +154,7 @@ public class CharacterServices {
         logger.info("Deleting a character by id");
 
         var entity = repository.findById(id).orElseThrow();
+
         repository.delete(entity);
         return ResponseEntity.noContent().build();
     }

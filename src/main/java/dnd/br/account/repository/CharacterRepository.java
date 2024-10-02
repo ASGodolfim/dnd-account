@@ -15,5 +15,4 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
 
     @Query("SELECT c FROM Character c WHERE c.accountUsername =:accountUsername AND c.name =:name")
     Character findByUsernameAndName(@Param("accountUsername") String username, @Param("name") String name);
-
 }
