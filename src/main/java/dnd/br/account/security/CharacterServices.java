@@ -6,6 +6,8 @@ import dnd.br.account.map.CharacterMapper;
 import dnd.br.account.map.Mapper;
 import dnd.br.account.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
@@ -32,7 +34,7 @@ public class CharacterServices {
         return dto;
     }
 
-    public CharacterDTO findById(Long id){
+    public CharacterDTO findById (Long id){
 
         logger.info("Find a character by name");
 
@@ -40,6 +42,13 @@ public class CharacterServices {
         CharacterDTO dto = Mapper.parseObj(entity, CharacterDTO.class);
         return dto;
     }
+
+    public ResponseEntity delete (Long id){
+        var entity = repository.findById(id).orElseThrow();
+        repository.delete(entity);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 

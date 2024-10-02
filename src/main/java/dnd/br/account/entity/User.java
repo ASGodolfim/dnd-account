@@ -47,11 +47,6 @@ public class User {
 
     public User(){}
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "character", joinColumns = {@JoinColumn(name = "username")},
-            inverseJoinColumns = {@JoinColumn(name = "account_username")})
-    private List<Character> names;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,13 +60,18 @@ public class User {
         return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, names);
     }
 
-    public List<String> getNames(){
-        List<String> characters = new ArrayList<>();
-        for (Character character:names){
-            characters.add(character.getName());
-        }
-        return characters;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_character", joinColumns = {@JoinColumn(name = "user_name")},
+            inverseJoinColumns = {@JoinColumn(name = "account_username")})
+    private List<Character> names;
+
+    public List<String> name(){
+        List<String> characterName = new ArrayList<>();
+        for (Character character:names){
+            characterName.add(character.getName());
+        }
+        return characterName;
 
 
     }

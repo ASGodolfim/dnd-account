@@ -5,6 +5,7 @@ import dnd.br.account.security.CharacterServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/character")
@@ -26,5 +27,11 @@ public class CharacterController {
     @Operation(summary = "Find Character by ID", description = "Finds a character by account username and id", tags = "Character")
     public CharacterDTO findById(@PathVariable(value = "id") Long id) throws Exception{
         return services.findById(id);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Deletes by id", description = "Deletes an existing character by id", tags = "Character")
+    public ResponseEntity delete(@PathVariable(value = "id") Long id) throws Exception{
+        return services.delete(id);
     }
 }
