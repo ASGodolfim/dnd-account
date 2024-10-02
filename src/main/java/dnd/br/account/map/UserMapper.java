@@ -9,7 +9,27 @@ public class UserMapper {
 
 
     public UserDTO convertEntityToDTO (User user) {
-        UserDTO dto = new UserDTO();
+        UserDTO dto = new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getAge());
         return dto;
+    }
+
+    public User ConvertDTOToEntity (UserDTO user){
+        User entity = new User(
+                user.getId(),
+                user.getUser_name(),
+                user.getPassword(),
+                user.getName(),
+                user.getEmail(),
+                user.getAge(),
+                true,
+                true,
+                true,
+                true);
+    return entity;
     }
 }

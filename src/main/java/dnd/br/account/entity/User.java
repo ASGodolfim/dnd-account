@@ -50,6 +50,9 @@ public class User implements UserDetails {
 
     public User(){}
 
+    public User(Long id, String userName, String password, String name, String email, Integer age, boolean b, boolean b1, boolean b2, boolean b3) {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,4 +91,20 @@ public class User implements UserDetails {
     public String getUsername() {
         return "";
     }
+
+    public User(Long id, String user_name, String password, String name, String email, Integer age, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, List<Character> names) {
+        this.id = id;
+        this.user_name = user_name;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.enabled = enabled;
+        this.names = names;
+    }
+
+    
 }
