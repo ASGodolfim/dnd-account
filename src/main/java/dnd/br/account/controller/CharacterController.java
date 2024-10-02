@@ -21,13 +21,13 @@ public class CharacterController {
 
     @PostMapping(value = "/account/c/new")
     @Operation(summary = "Creates new Character", description = "Creates a new Character", tags = "Character")
-    public CharacterDTO create(@RequestBody CharacterDTO character){
+    public CharacterDTO create(@RequestBody CharacterDTO character) throws Exception {
         return services.create(character);
     }
 
     @PutMapping(value = "/account/c/{id}")
     @Operation(summary = "Updates a Character", description = "Updates an Existing Character", tags = "Character")
-    public CharacterDTO update(@PathVariable(value = "id") Long id,@RequestBody CharacterDTO character){
+    public CharacterDTO update(@PathVariable(value = "id") Long id,@RequestBody CharacterDTO character) throws Exception {
         return services.update(character);
     }
 
