@@ -14,7 +14,6 @@ import java.util.List;
 public class CharacterDTO {
 
 
-    @JsonIgnore
     private long id;
     private String accountUsername;
     private String name;
