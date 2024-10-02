@@ -131,6 +131,11 @@ public class CharacterServices {
         return Mapper.parseObj(entity, CharacterDTO.class);
     }
 
+    public CharacterDTO FindByUsernameAndName(String username, String name){
+        var entity = repository.findByUsernameAndName(username, name);
+        return Mapper.parseObj(entity, CharacterDTO.class);
+    }
+
     public List<CharacterDTO> findByAccountUsername (String accountUsername){
 
         logger.info("Find all characters of an account by username");
