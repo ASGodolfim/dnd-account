@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Service
@@ -43,11 +44,24 @@ public class CharacterServices {
         return dto;
     }
 
+    public List<CharacterDTO> findByUsername (String name){
+
+        logger.info("Find a characters of an account by username");
+
+        var entity = repository.findByUserame(name);
+        List<CharacterDTO> dto = Mapper.parseListObj(entity, CharacterDTO.class);
+        return dto;
+    }
+
     public ResponseEntity delete (Long id){
+
+        logger.info("Deleting a character by id");
+
         var entity = repository.findById(id).orElseThrow();
         repository.delete(entity);
         return ResponseEntity.noContent().build();
     }
+
 
 
 

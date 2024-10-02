@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping(value = "/character")
 @RestController
 @Tag(name = "Character", description = "Endpoints for managing characters")
@@ -21,6 +23,12 @@ public class CharacterController {
     @Operation(summary = "Creates new Character", description = "Creates a new Character", tags = "Character")
     public CharacterDTO create(@RequestBody CharacterDTO character){
         return services.create(character);
+    }
+
+    @GetMapping(value = "/{username}")
+    @Operation(summary = "Finds all characters of an account", description = "finds all character of an account by username", tags = "Character")
+    public List<CharacterDTO> findByUsername(@PathVariable(value = "username")String username) throws Exception{
+        return services.findByUsername(username);
     }
 
     @GetMapping(value = "/{id}")
