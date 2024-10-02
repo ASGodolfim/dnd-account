@@ -31,8 +31,14 @@ public class CharacterController {
         return services.findByUsername(username);
     }
 
+    @GetMapping(value = "/{name}")
+    @Operation(summary = "Find Character by Name", description = "Finds a character by name", tags = "Character")
+    public CharacterDTO findById(@PathVariable(value = "name") String name) throws Exception{
+        return services.findByName(name);
+    }
+
     @GetMapping(value = "/{id}")
-    @Operation(summary = "Find Character by ID", description = "Finds a character by account username and id", tags = "Character")
+    @Operation(summary = "Find Character by ID", description = "Finds a character by account id", tags = "Character")
     public CharacterDTO findById(@PathVariable(value = "id") Long id) throws Exception{
         return services.findById(id);
     }

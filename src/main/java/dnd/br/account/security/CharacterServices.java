@@ -37,16 +37,25 @@ public class CharacterServices {
 
     public CharacterDTO findById (Long id){
 
-        logger.info("Find a character by name");
+        logger.info("Find a character by id");
 
         var entity = repository.findById(id).orElseThrow();
         CharacterDTO dto = Mapper.parseObj(entity, CharacterDTO.class);
         return dto;
     }
 
+    public CharacterDTO findByName (String name){
+
+        logger.info("Find a character by name");
+
+        var entity = repository.findByName(name);
+        CharacterDTO dto = Mapper.parseObj(entity, CharacterDTO.class);
+        return dto;
+    }
+
     public List<CharacterDTO> findByUsername (String name){
 
-        logger.info("Find a characters of an account by username");
+        logger.info("Find all characters of an account by username");
 
         var entity = repository.findByUserame(name);
         List<CharacterDTO> dto = Mapper.parseListObj(entity, CharacterDTO.class);
