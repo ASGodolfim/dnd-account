@@ -11,5 +11,4 @@ import java.util.List;
 public interface CharacterRepository extends JpaRepository<Character, Long> {
 
     List<CharacterDTO> findByAccountUsername(String username);
-    CharacterDTO findByName(String name);
 }

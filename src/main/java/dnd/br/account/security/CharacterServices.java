@@ -77,14 +77,6 @@ public class CharacterServices {
         return Mapper.parseObj(entity, CharacterDTO.class);
     }
 
-    public CharacterDTO findByName (String name){
-
-        logger.info("Find a character by name");
-
-        var entity = repository.findByName(name);
-        return Mapper.parseObj(entity, CharacterDTO.class);
-    }
-
     public List<CharacterDTO> findByAccountUsername (String accountUsername){
 
         logger.info("Find all characters of an account by username");
