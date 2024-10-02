@@ -4,6 +4,7 @@ import dnd.br.account.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
@@ -15,10 +16,13 @@ public class UserServices implements UserDetailsService {
     UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws Exception{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = repository.findByUsername(username);
         if (user != null) {
             return user;
+
+        } else {
+            throw new UsernameNotFoundException("Username " + username + " Not found");
         }
     }
 }
