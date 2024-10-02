@@ -7,8 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.security.PublicKey;
-
 @Service
 public class UserServices implements UserDetailsService {
 
@@ -25,4 +23,6 @@ public class UserServices implements UserDetailsService {
             throw new UsernameNotFoundException("Username " + username + " Not found");
         }
     }
+
+
 }
