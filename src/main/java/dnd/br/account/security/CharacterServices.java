@@ -132,7 +132,7 @@ public class CharacterServices {
     }
 
     public CharacterDTO FindByUsernameAndName(String username, String name){
-        var entity = repository.findByUsernameAndName(username, name);
+        Character entity = repository.findByUsernameAndName(username, name);
         return Mapper.parseObj(entity, CharacterDTO.class);
     }
 

@@ -12,6 +12,8 @@ import java.util.List;
 
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long> {
+
     @Query("SELECT c FROM Character c WHERE c.accountUsername =:accountUsername AND c.name =:name")
-    User findByUsernameAndName(@Param("accountUsername") String username,@Param("name") String name);
+    Character findByUsernameAndName(@Param("accountUsername") String username, @Param("name") String name);
+
 }
