@@ -1,5 +1,6 @@
 package dnd.br.account.entity;
 
+import dnd.br.account.dto.CharacterDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -58,25 +59,21 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(user_name, user.user_name) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(age, user.age) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(enabled, user.enabled) && Objects.equals(names, user.names);
+        return Objects.equals(id, user.id) && Objects.equals(user_name, user.user_name) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(age, user.age) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(enabled, user.enabled) && Objects.equals(user_character, user.user_character);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, names);
+        return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, user_character);
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_character", joinColumns = {@JoinColumn(name = "user_name")},
             inverseJoinColumns = {@JoinColumn(name = "account_username")})
-    private List<Character> names;
+    private List<CharacterDTO> user_character;
 
-    public List<String> name(){
-        List<String> characterName = new ArrayList<>();
-        for (Character character:names){
-            characterName.add(character.getName());
-        }
-        return characterName;
+    public void getUserCharacter(CharacterDTO characterDTO){
+        user_character.add(characterDTO);
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -102,7 +99,7 @@ public class User implements UserDetails {
         return "";
     }
 
-    public User(Long id, String user_name, String password, String name, String email, Integer age, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, List<Character> names) {
+    public User(Long id, String user_name, String password, String name, String email, Integer age, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, List<CharacterDTO> user_character) {
         this.id = id;
         this.user_name = user_name;
         this.password = password;
@@ -113,7 +110,7 @@ public class User implements UserDetails {
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;
         this.enabled = enabled;
-        this.names = names;
+        this.user_character = user_character;
     }
 
     

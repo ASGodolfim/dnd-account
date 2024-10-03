@@ -1,5 +1,6 @@
 package dnd.br.account.config.services;
 
+import dnd.br.account.config.repository.UserRepository;
 import dnd.br.account.controller.CharacterController;
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
@@ -23,6 +24,9 @@ public class CharacterServices {
 
     @Autowired
     CharacterRepository repository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     CustomMapper mapper;
@@ -127,6 +131,7 @@ public class CharacterServices {
         }
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
         var dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
+        userRepository.findByUsername(entity.getAccountUsername()).getUserCharacter(dto);
         dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }

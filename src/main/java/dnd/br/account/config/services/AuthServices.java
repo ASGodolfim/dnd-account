@@ -24,26 +24,26 @@ public class AuthServices {
     @Autowired
     private UserRepository repository;
 
-    public ResponseEntity signIn(AccountCredentials data){
+    public ResponseEntity signIn(AccountCredentials data) {
         try {
             var username = data.getUsername();
             var password = data.getPassword();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            var auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            System.out.println(auth);
 
             var user = repository.findByUsername(username);
 
             Token tokenResponse = new Token();
-            if (user != null){
+            if (user != null) {
                 tokenResponse = tokenProvider.createAceessToken(username, user.getRoles());
                 System.out.println(tokenResponse);
-            }
-            else {
+            } else {
                 throw new UsernameNotFoundException("Username " + username + " not found");
             }
             return ResponseEntity.ok(tokenResponse);
-        } catch (Exception e){
+
+        } catch (Exception e) {
             throw new BadCredentialsException("Invalid username/password");
         }
-
     }
 }
