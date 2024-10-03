@@ -1,14 +1,16 @@
 package dnd.br.account.map;
 
 import dnd.br.account.dto.CharacterDTO;
+import dnd.br.account.dto.UserDTO;
 import dnd.br.account.entity.Character;
+import dnd.br.account.entity.User;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CharacterMapper {
+public class CustomMapper {
 
     public CharacterDTO convertEntityToDTO (Character character){
-        CharacterDTO dto = new CharacterDTO(
+        return new CharacterDTO(
                 character.getId(),
                 character.getAccountUsername(),
                 character.getName(),
@@ -31,11 +33,10 @@ public class CharacterMapper {
                 character.getArmor(),
                 character.getWeapon(),
                 character.getTreasure());
-        return dto;
     }
 
     public Character convertDTOToEntity (CharacterDTO character){
-        Character entity = new Character(
+        return new Character(
                 character.getId(),
                 character.getAccountUsername(),
                 character.getName(),
@@ -58,6 +59,28 @@ public class CharacterMapper {
                 character.getArmor(),
                 character.getWeapon(),
                 character.getTreasure());
-        return entity;
+    }
+
+    public UserDTO convertEntityToDTO (User user) {
+        return new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getAge());
+    }
+
+    public User ConvertDTOToEntity (UserDTO user){
+        return new User(
+                user.getId(),
+                user.getUser_name(),
+                user.getPassword(),
+                user.getName(),
+                user.getEmail(),
+                user.getAge(),
+                true,
+                true,
+                true,
+                true);
     }
 }

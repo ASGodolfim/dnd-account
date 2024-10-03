@@ -5,7 +5,7 @@ import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
 import dnd.br.account.exeptions.NotFoundExeption;
 import dnd.br.account.exeptions.RequiredObjectIsNullException;
-import dnd.br.account.map.CharacterMapper;
+import dnd.br.account.map.CustomMapper;
 import dnd.br.account.map.Mapper;
 import dnd.br.account.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CharacterServices {
     CharacterRepository repository;
 
     @Autowired
-    CharacterMapper mapper;
+    CustomMapper mapper;
 
     private Logger logger = Logger.getLogger(CharacterServices.class.getName());
 
@@ -35,7 +35,7 @@ public class CharacterServices {
 
         logger.info("Creating new Character");
 
-        var entity = Mapper.parseObj(character, Character.class);
+        var entity = Mapper.parseChar(character, Character.class);
         var dto = new CharacterDTO();
         if (!dto.getMulticlass()) {dto.setCharacterMulticlass(null);dto.setMulticlassSubclass(null);dto.setMulticlassLevel(0);}
 
@@ -65,7 +65,7 @@ public class CharacterServices {
         }
         dto.setLife(8 + conmodifier + ((dto.getCharacterLevel() - 1) * (5+conmodifier)));
 
-        dto = Mapper.parseObj(repository.save(entity), CharacterDTO.class);
+        dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
         dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
@@ -126,7 +126,7 @@ public class CharacterServices {
             default:
         }
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
-        var dto = Mapper.parseObj(repository.save(entity), CharacterDTO.class);
+        var dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
         dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
@@ -136,7 +136,7 @@ public class CharacterServices {
         logger.info("Find a character by id");
 
         var entity = repository.findById(id).orElseThrow(() -> new NotFoundExeption("Nothing Found"));
-        CharacterDTO dto = Mapper.parseObj(entity, CharacterDTO.class);
+        CharacterDTO dto = Mapper.parseChar(entity, CharacterDTO.class);
         dto.add(linkTo(methodOn(CharacterController.class).findById(id)).withSelfRel());
         return dto;
     }
@@ -144,7 +144,7 @@ public class CharacterServices {
     public CharacterDTO FindByUsernameAndName(String username, String name) throws Exception{
         Character entity = repository.findByUsernameAndName(username, name);
         if (entity == null) throw new NotFoundExeption("Nothing Found");
-        var dto = Mapper.parseObj(entity, CharacterDTO.class);
+        var dto = Mapper.parseChar(entity, CharacterDTO.class);
         dto.add(linkTo(methodOn(CharacterController.class).findById(dto.getId())).withSelfRel());
         return dto;
     }
@@ -153,7 +153,7 @@ public class CharacterServices {
 
         logger.info("Find all characters of an account by username");
 
-        var chars = Mapper.parseListObj(repository.findAll(), CharacterDTO.class).stream().filter(c -> c.getAccountUsername().equals(accountUsername)).collect(Collectors.toList());
+        var chars = Mapper.parseListChar(repository.findAll(), CharacterDTO.class).stream().filter(c -> c.getAccountUsername().equals(accountUsername)).collect(Collectors.toList());
         chars.forEach(c -> {
             try {
                 c.add(linkTo(methodOn(CharacterController.class).findById(c.getId())).withSelfRel());
@@ -168,7 +168,7 @@ public class CharacterServices {
 
         logger.info("Finding all the Characters!");
 
-        var chars = Mapper.parseListObj(repository.findAll(), CharacterDTO.class);
+        var chars = Mapper.parseListChar(repository.findAll(), CharacterDTO.class);
         chars.forEach(c -> {
             try {
                 c.add(linkTo(methodOn(CharacterController.class).findById(c.getId())).withSelfRel());

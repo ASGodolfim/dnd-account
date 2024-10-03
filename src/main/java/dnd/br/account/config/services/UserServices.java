@@ -46,37 +46,37 @@ public class UserServices implements UserDetailsService {
 
         logger.info("Creating new User");
 
-        var entity = Mapper.parseObj(user, User.class);
+        var entity = Mapper.parseChar(user, User.class);
         var dto = new UserDTO();
-        dto = Mapper.parseObj(repository.save(entity), UserDTO.class);
+        dto = Mapper.parseUser(repository.save(entity), UserDTO.class);
         dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
         return dto;
 
     }
 
-    public UserDTO updateUser(UserDTO user) throws  Exception{
+    public UserDTO updateUser(UserDTO user) throws  UsernameNotFoundException{
 
         if (user == null) throw new RequiredObjectIsNullException();
 
         logger.info("Updating a User");
 
-        var entity = repository.findById(user.getId()).orElseThrow();
+        var entity = repository.findByUsername(user.getUser_name());
+
+        if (entity == null) throw new NotFoundExeption("Not Found");
 
         entity.setPassword(user.getPassword());
         entity.setName(user.getName());
         entity.setEmail(user.getEmail());
         entity.setAge(user.getAge());
 
-        var dto = Mapper.parseObj(repository.save(entity), UserDTO.class);
+        var dto = Mapper.parseUser(repository.save(entity), UserDTO.class);
         dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
         return dto;
     }
 
-    public User findByUsername (String username) throws Exception{
+    public User findByUsername (String username) throws UsernameNotFoundException{
         User entity = repository.findByUsername(username);
         if (entity == null) throw new NotFoundExeption("User Not Found");
-        var dto = Mapper.parseObj(entity, UserDTO.class);
-        dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
         return entity;
     }
 
