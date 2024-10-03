@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "characters")
 @JsonPropertyOrder({"id","account_username","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "multiclass_level", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
-public class Character {
+public class Character{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,7 @@ public class Character {
     private String subclass;
     @Column(name = "class_level", nullable = false)
     private Integer classLevel;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Boolean multiclass;
     @Column(name = "character_multiclass", nullable = true)
     private String characterMulticlass;
@@ -78,7 +78,7 @@ public class Character {
         this.characterClass = characterClass;
         this.subclass = subclass;
         this.classLevel = classLevel;
-        this.multiclass = multiclass;
+        this.multiclass = multiclass = false;
         this.characterMulticlass = characterMulticlass;
         this.multiclassSubclass = multiclassSubclass;
         this.multiclassLevel = multiclassLevel;

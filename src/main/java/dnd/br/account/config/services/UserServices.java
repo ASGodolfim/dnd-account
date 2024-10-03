@@ -75,7 +75,6 @@ public class UserServices implements UserDetailsService {
         repository.save(entity);
         var dto = new UserDTO();
         dto = Mapper.parseUser(entity, UserDTO.class);
-        dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
         return dto;
 
     }
@@ -96,7 +95,6 @@ public class UserServices implements UserDetailsService {
         entity.setAge(user.getAge());
 
         var dto = Mapper.parseUser(repository.save(entity), UserDTO.class);
-        dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
         return dto;
     }
 

@@ -70,10 +70,10 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_character", joinColumns = {@JoinColumn(name = "user_name")},
             inverseJoinColumns = {@JoinColumn(name = "account_username")})
-    private List<CharacterDTO> user_character;
+    private List<Character> user_character;
 
-    public void getUserCharacter(CharacterDTO characterDTO){
-        user_character.add(characterDTO);
+    public void getUserCharacter(Character character){
+        user_character.add(character);
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -99,7 +99,7 @@ public class User implements UserDetails {
         return "";
     }
 
-    public User(Long id, String user_name, String password, String name, String email, Integer age, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, List<CharacterDTO> user_character) {
+    public User(Long id, String user_name, String password, String name, String email, Integer age, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, List<Character> user_character) {
         this.id = id;
         this.user_name = user_name;
         this.password = password;

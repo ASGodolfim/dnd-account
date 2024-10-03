@@ -1,18 +1,14 @@
 package dnd.br.account.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.util.List;
-
 @Getter
 @Setter
 @JsonPropertyOrder({"account_username","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "multiclass_level", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
-public class CharacterDTO extends RepresentationModel<CharacterDTO> {
+public class CharacterDTO {
 
 
     private long id;
@@ -28,7 +24,7 @@ public class CharacterDTO extends RepresentationModel<CharacterDTO> {
     private String characterClass;
     private String subclass;
     private Integer classLevel;
-    private Boolean multiclass;
+    private Boolean multiclass = false;
     private String characterMulticlass;
     private String multiclassSubclass;
     private Integer multiclassLevel;
@@ -69,5 +65,13 @@ public class CharacterDTO extends RepresentationModel<CharacterDTO> {
     }
 
     public CharacterDTO(Long id, String accountUsername, String name, Integer strength, Integer constitution, Integer dexterity, Integer wisdom, Integer intelligence, Integer charisma, Integer characterLevel, String characterClass, String subclass, Boolean multiclass, String characterMulticlass, String multiClassSubclass, Integer multiclassLevel, Integer life, Integer armorClass, Integer gold, String armor, String weapon, String treasure) {
+    }
+
+    public Boolean getMulticlass() {
+        return multiclass;
+    }
+
+    public void setMulticlass(Boolean multiclass) {
+        this.multiclass = multiclass;
     }
 }
