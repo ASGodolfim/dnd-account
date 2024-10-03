@@ -143,7 +143,7 @@ public class CharacterServices {
 
     public CharacterDTO FindByUsernameAndName(String username, String name) throws Exception{
         Character entity = repository.findByUsernameAndName(username, name);
-        if (repository.findByUsernameAndName(username, name) == null) throw new NotFoundExeption("Nothing Found");
+        if (entity == null) throw new NotFoundExeption("Nothing Found");
         var dto = Mapper.parseObj(entity, CharacterDTO.class);
         dto.add(linkTo(methodOn(CharacterController.class).findById(dto.getId())).withSelfRel());
         return dto;
