@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/api/u")
+
 @RestController
 @Tag(name = "User", description = "Endpoints for Users")
 public class UserController {
@@ -22,13 +22,13 @@ public class UserController {
         return services.createUser(user);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "api/u/{id}")
     @Operation(summary = "Updates a User", description = "Updates an exisisting user", tags = "User")
     public UserDTO updateUser (@RequestBody UserDTO user, @PathVariable(value = "id") Long id) throws Exception{
         return services.updateUser(user);
     }
 
-    @GetMapping(value = "/{username}")
+    @GetMapping(value = "api/u/{username}")
     @Operation(summary = "Finds a user by Username", description = "Finds a exisiting user", tags = "User")
     public User findByUsername (@PathVariable(value = "username") String username) throws Exception {
         return services.findByUsername(username);

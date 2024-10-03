@@ -20,14 +20,14 @@ public class AuthController {
     @Autowired
     AuthServices authServices;
 
-    private boolean checkifParamsIsNotNull (AccountCredentials data){
+    private boolean checkIfParamsIsNotNull (AccountCredentials data){
         return data == null || data.getUsername() == null || data.getUsername().isBlank() || data.getPassword() == null || data.getPassword().isBlank();
     }
 
     @PostMapping(value = "/singin")
     @Operation(summary = "Authenticates a user and returns a token")
     public ResponseEntity signIn(@RequestBody AccountCredentials data){
-        if (checkifParamsIsNotNull(data))
+        if (checkIfParamsIsNotNull(data))
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid Username or Password");
         var token = authServices.signIn(data);
         if (token == null) return  ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid Username or Password");
