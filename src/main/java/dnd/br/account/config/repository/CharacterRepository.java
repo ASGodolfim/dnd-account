@@ -1,4 +1,4 @@
-package dnd.br.account.repository;
+package dnd.br.account.config.repository;
 
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;

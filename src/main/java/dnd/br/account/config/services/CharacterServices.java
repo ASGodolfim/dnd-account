@@ -1,13 +1,13 @@
-package dnd.br.account.services;
+package dnd.br.account.config.services;
 
 import dnd.br.account.controller.CharacterController;
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
 import dnd.br.account.exeptions.NotFoundExeption;
 import dnd.br.account.exeptions.RequiredObjectIsNullException;
-import dnd.br.account.map.CustomMapper;
-import dnd.br.account.map.Mapper;
-import dnd.br.account.repository.CharacterRepository;
+import dnd.br.account.config.map.CustomMapper;
+import dnd.br.account.config.map.Mapper;
+import dnd.br.account.config.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

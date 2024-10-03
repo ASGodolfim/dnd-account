@@ -1,13 +1,16 @@
-package dnd.br.account.map;
+package dnd.br.account.config.map;
 
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.dto.UserDTO;
 import dnd.br.account.entity.Character;
 import dnd.br.account.entity.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class Mapper {
 
     private static final ModelMapper charMapper = new ModelMapper();

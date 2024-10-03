@@ -2,7 +2,7 @@ package dnd.br.account.controller;
 
 import dnd.br.account.dto.UserDTO;
 import dnd.br.account.entity.User;
-import dnd.br.account.services.UserServices;
+import dnd.br.account.config.services.UserServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

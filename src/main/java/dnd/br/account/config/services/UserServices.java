@@ -1,12 +1,12 @@
-package dnd.br.account.services;
+package dnd.br.account.config.services;
 
 import dnd.br.account.controller.UserController;
 import dnd.br.account.dto.UserDTO;
 import dnd.br.account.entity.User;
 import dnd.br.account.exeptions.NotFoundExeption;
 import dnd.br.account.exeptions.RequiredObjectIsNullException;
-import dnd.br.account.map.Mapper;
-import dnd.br.account.repository.UserRepository;
+import dnd.br.account.config.map.Mapper;
+import dnd.br.account.config.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

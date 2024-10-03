@@ -66,7 +66,6 @@ public class User implements UserDetails {
         return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, names);
     }
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_character", joinColumns = {@JoinColumn(name = "user_name")},
             inverseJoinColumns = {@JoinColumn(name = "account_username")})
@@ -78,8 +77,19 @@ public class User implements UserDetails {
             characterName.add(character.getName());
         }
         return characterName;
+    }
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_permission", joinColumns = {@JoinColumn(name = "id_user")},
+            inverseJoinColumns = {@JoinColumn(name = "id_permission")})
+    private List<Permission> permissions;
 
+    public List<String> getRoles(){
+        List<String> roles = new ArrayList<>();
+        for (Permission permission:permissions){
+            roles.add(permission.getDescription());
+        }
+        return roles;
     }
 
     @Override

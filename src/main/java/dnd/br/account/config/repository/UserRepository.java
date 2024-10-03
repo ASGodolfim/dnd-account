@@ -1,4 +1,4 @@
-package dnd.br.account.repository;
+package dnd.br.account.config.repository;
 
 import dnd.br.account.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

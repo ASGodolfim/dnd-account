@@ -1,4 +1,4 @@
-package dnd.br.account.map;
+package dnd.br.account.config.map;
 
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.dto.UserDTO;
