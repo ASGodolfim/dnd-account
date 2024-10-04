@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `characters` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `account_username` varchar(40) NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
+  `name` varchar(40) NOT NULL UNIQUE,
   `strength` INTEGER NOT NULL,
   `constitution` INTEGER NOT NULL,
   `dexterity` INTEGER NOT NULL,
