@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -105,4 +108,18 @@ public class Character{
     public int hashCode() {
         return Objects.hash(id, accountUsername, name, strength, constitution, dexterity, wisdom, intelligence, charisma, characterLevel, characterClass, subclass, classLevel, multiclass, characterMulticlass, multiclassSubclass, multiclassLevel, life, armorClass, gold, armor, weapon, treasure);
     }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_characters", joinColumns = {@JoinColumn(name = "name")},
+            inverseJoinColumns = {@JoinColumn(name = "user_character")})
+    private List<User> users;
+
+    public List<String> getUsers(){
+        List<String> user_character = new ArrayList<>();
+        for (User user:users) {
+            user_character.add(user.getUser_name());
+        }
+        return user_character;
+    }
+
 }

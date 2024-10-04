@@ -1,6 +1,5 @@
 package dnd.br.account.config.services;
 
-import dnd.br.account.controller.UserController;
 import dnd.br.account.dto.UserDTO;
 import dnd.br.account.entity.User;
 import dnd.br.account.exeptions.NotFoundExeption;
@@ -15,9 +14,6 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,10 +68,8 @@ public class UserServices implements UserDetailsService {
         entity.setAccountNonLocked(true);
         entity.setCredentialsNonExpired(true);
         entity.setEnabled(true);
-        repository.save(entity);
-        var dto = new UserDTO();
-        dto = Mapper.parseUser(entity, UserDTO.class);
-        return dto;
+        return Mapper.parseUser(repository.save(entity), UserDTO.class);
+
 
     }
 

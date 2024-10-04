@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS `users` (
     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-    `user_name` varchar(255) DEFAULT NULL,
-    `password` varchar(255) DEFAULT NULL,
+    `user_name` varchar(40) NOT NULL UNIQUE,
+    `password` varchar(255) NOT NULL,
     `name` varchar(255) DEFAULT NULL,
-    `email` varchar(255) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL UNIQUE,
     `age` INTEGER(3) DEFAULT NULL,
     `account_non_expired` bit(1) DEFAULT NULL,
     `account_non_locked` bit(1) DEFAULT NULL,

@@ -1,6 +1,5 @@
 package dnd.br.account.entity;
 
-import dnd.br.account.dto.CharacterDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,22 +58,28 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(user_name, user.user_name) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(age, user.age) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(enabled, user.enabled) && Objects.equals(user_character, user.user_character);
+        return Objects.equals(id, user.id) && Objects.equals(user_name, user.user_name) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(age, user.age) && Objects.equals(accountNonExpired, user.accountNonExpired) && Objects.equals(accountNonLocked, user.accountNonLocked) && Objects.equals(credentialsNonExpired, user.credentialsNonExpired) && Objects.equals(enabled, user.enabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, user_character);
+        return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_character", joinColumns = {@JoinColumn(name = "user_name")},
+/*
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_characters", joinColumns = {@JoinColumn(name = "user_name")},
             inverseJoinColumns = {@JoinColumn(name = "account_username")})
-    private List<Character> user_character;
+    private List<Character> characters;
 
-    public void getUserCharacter(Character character){
-        user_character.add(character);
+    public List<String> getCharacter(){
+        List<String> user_character = new ArrayList<>();
+        for (Character character:characters) {
+            user_character.add(character.getName());
+        }
+        return user_character;
     }
+ */
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission", joinColumns = {@JoinColumn(name = "id_user")},
@@ -99,7 +104,7 @@ public class User implements UserDetails {
         return "";
     }
 
-    public User(Long id, String user_name, String password, String name, String email, Integer age, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, List<Character> user_character) {
+    public User(Long id, String user_name, String password, String name, String email, Integer age, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled, List<String> user_character) {
         this.id = id;
         this.user_name = user_name;
         this.password = password;
@@ -110,7 +115,6 @@ public class User implements UserDetails {
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;
         this.enabled = enabled;
-        this.user_character = user_character;
     }
 
     

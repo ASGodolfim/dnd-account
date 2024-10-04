@@ -1,3 +1,3 @@
        INSERT INTO `users` (`user_name`, `password`, `name`, `email`, `age`, `account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`) VALUE
-           ('Godolfa', 'senha1234','Arthur Stone','stonegodolfim@hotmail.com', '29',  b'1', b'1', b'1', b'1'),
-           ('Stone', 'senha1234','Arthur Stone','arthurgodolfim@hotmail.com', '29',  b'1', b'1', b'1', b'1');
+           ('Godolfa', '7f000bf779f87293035bb611cb1b70fc51e1d0e2044792259576e51826ad4d6b6a481bbf3b0318a8','Arthur Stone','stonegodolfim@hotmail.com', '29',  b'1', b'1', b'1', b'1'),
+           ('Stone', '7f000bf779f87293035bb611cb1b70fc51e1d0e2044792259576e51826ad4d6b6a481bbf3b0318a8','Arthur Stone','arthurgodolfim@hotmail.com', '29',  b'1', b'1', b'1', b'1');

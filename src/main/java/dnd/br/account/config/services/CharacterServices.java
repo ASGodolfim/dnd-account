@@ -65,8 +65,9 @@ public class CharacterServices {
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
 
         var dto = new CharacterDTO();
+        var user = entity;
         dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
-        userRepository.findByUsername(entity.getAccountUsername()).getUserCharacter(entity);
+
         return dto;
     }
 
@@ -78,7 +79,6 @@ public class CharacterServices {
 
         Character entity;
         entity = repository.findById(character.getId()).orElseThrow();
-
         entity.setName(character.getName());
         entity.setCharacterClass(character.getCharacterClass());
         entity.setSubclass(character.getSubclass());
@@ -126,8 +126,8 @@ public class CharacterServices {
             default:
         }
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
+        String user = entity.getName();
         var dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
-        userRepository.findByUsername(entity.getAccountUsername()).getUserCharacter(entity);
         return dto;
     }
 
