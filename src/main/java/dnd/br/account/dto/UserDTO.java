@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class UserDTO {
+public class UserDTO extends RepresentationModel {
 
     private Long id;
     private String user_name;

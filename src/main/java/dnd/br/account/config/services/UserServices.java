@@ -72,8 +72,8 @@ public class UserServices implements UserDetailsService {
         entity.setAccountNonLocked(true);
         entity.setCredentialsNonExpired(true);
         entity.setEnabled(true);
-        repository.save(entity);
         var dto = new UserDTO();
+        repository.save(entity);
         dto = Mapper.parseUser(entity, UserDTO.class);
         return dto;
 

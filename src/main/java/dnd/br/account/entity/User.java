@@ -67,7 +67,7 @@ public class User implements UserDetails {
     }
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_characters", joinColumns = {@JoinColumn(name = "user_name")},
             inverseJoinColumns = {@JoinColumn(name = "account_username")})
     private List <Character> characters;

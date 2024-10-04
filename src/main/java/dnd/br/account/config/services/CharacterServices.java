@@ -126,7 +126,7 @@ public class CharacterServices {
             default:
         }
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
-        var user = entity;
+        String user = entity.getName();
         var dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
         return dto;
     }
