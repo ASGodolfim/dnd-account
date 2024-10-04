@@ -10,6 +10,8 @@ import dnd.br.account.config.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -71,6 +73,11 @@ public class CharacterServices {
         return dto;
     }
 
+    private boolean classExists (String string){
+        List<String> classes = new ArrayList<>();
+        classes.add("")
+    }
+
     public CharacterDTO update (CharacterDTO character) throws Exception{
 
         if (character == null) throw new RequiredObjectIsNullException();
@@ -102,6 +109,7 @@ public class CharacterServices {
         if (!entity.getMulticlass() || entity.getMulticlass() == null) {entity.setMulticlass(false);entity.setCharacterMulticlass(null);entity.setMulticlassSubclass(null);entity.setMulticlassLevel(0);}
 
         entity.setCharacterLevel(entity.getClassLevel() + entity.getMulticlassLevel());
+        if (entity.getCharacterLevel()<1 || entity.getCharacterLevel()>20) entity.setCharacterLevel(null);
 
         int conmodifier = -1;
         switch (entity.getConstitution()){
