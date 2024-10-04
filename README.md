@@ -202,12 +202,13 @@ Lista de Classes e Sub Classes Existentes:
 
 3. Glory
 
-
-
 4. Oathbreaker
 
 
+
 - Ranger
+
+
 
 1. Beast Master
 
