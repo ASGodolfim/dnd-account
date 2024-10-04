@@ -16,13 +16,11 @@ Criptografia para a senha com o pbkd2 e geração de token.
 
 3. Nome Completo (String)
 
-4. Email (String)
+4. Email (unico)(String)
 
 5. Endereço (String)
 
 6. Idade (Integer)
-
-7. Lista de personagens (List)
 
  - Personagens:
  terá as seguintes informações (passível a mudança)
@@ -63,6 +61,6 @@ Criptografia para a senha com o pbkd2 e geração de token.
 
 18. Armadura (String)
 
-19. Arma (List<String>)
+19. Arma (<String>)
 
-20. Tesouro (List<String>)
+20. Tesouro (<String>)

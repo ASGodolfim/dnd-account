@@ -3,12 +3,11 @@ CREATE TABLE IF NOT EXISTS `users` (
     `user_name` varchar(40) NOT NULL UNIQUE,
     `password` varchar(255) NOT NULL,
     `name` varchar(255) DEFAULT NULL,
-    `email` varchar(255) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL UNIQUE,
     `age` INTEGER(3) DEFAULT NULL,
     `account_non_expired` bit(1) DEFAULT NULL,
     `account_non_locked` bit(1) DEFAULT NULL,
     `credentials_non_expired` bit(1) DEFAULT NULL,
     `enabled` bit(1) DEFAULT NULL,
-    `user_character`varchar(255),
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_user_name` (`user_name`));
