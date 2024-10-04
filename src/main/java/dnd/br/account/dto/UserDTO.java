@@ -2,13 +2,11 @@ package dnd.br.account.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
-
 import java.util.Objects;
 
 @Getter
 @Setter
-public class UserDTO extends RepresentationModel {
+public class UserDTO {
 
     private Long id;
     private String user_name;

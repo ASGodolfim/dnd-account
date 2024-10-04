@@ -66,19 +66,20 @@ public class User implements UserDetails {
         return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
     }
 
-
+/*
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_characters", joinColumns = {@JoinColumn(name = "user_name")},
             inverseJoinColumns = {@JoinColumn(name = "account_username")})
-    private List <Character> characters;
+    private List<Character> characters;
 
-    public List<String> getUserCharacter(){
+    public List<String> getCharacter(){
         List<String> user_character = new ArrayList<>();
         for (Character character:characters) {
             user_character.add(character.getName());
         }
         return user_character;
     }
+ */
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission", joinColumns = {@JoinColumn(name = "id_user")},
