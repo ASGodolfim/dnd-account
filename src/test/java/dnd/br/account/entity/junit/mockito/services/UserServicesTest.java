@@ -4,6 +4,7 @@ import dnd.br.account.config.repository.UserRepository;
 import dnd.br.account.config.services.UserServices;
 import dnd.br.account.dto.UserDTO;
 import dnd.br.account.entity.User;
+import dnd.br.account.exeptions.RequiredObjectIsNullException;
 import dnd.br.account.unittests.mocks.MockUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -54,5 +54,17 @@ public class UserServicesTest {
         assertEquals("Test name1", result.getName());
         assertEquals("Test email1", result.getEmail());
         assertEquals(Integer.valueOf(1), result.getAge());
+    }
+
+    @Test
+    void createWithNullUser(){
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () ->{
+            services.createUser(null);
+        });
+
+        String expectedMessage = "Object Is Null";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
