@@ -89,4 +89,16 @@ public class UserServicesTest {
         assertEquals("Test email1", result.getEmail());
         assertEquals(Integer.valueOf(1), result.getAge());
     }
+
+    @Test
+    void updateWithNullUser(){
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+            services.updateUser(null);
+        });
+
+        String expectedMessage = "Object Is Null";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 }
