@@ -2,7 +2,9 @@ package dnd.br.account.unittests;
 
 import dnd.br.account.config.map.Mapper;
 import dnd.br.account.dto.CharacterDTO;
+import dnd.br.account.dto.UserDTO;
 import dnd.br.account.unittests.mocks.MockCharacter;
+import dnd.br.account.unittests.mocks.MockUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,16 +14,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapperConverterTest {
 
-    MockCharacter inputObject;
+    MockCharacter inputChar;
+    MockUser inputUser;
 
     @BeforeEach
     public void setUp(){
-        inputObject = new MockCharacter();
+        inputChar = new MockCharacter();
+        inputUser = new MockUser();
     }
 
     @Test
-    public void parseEntityToDTOTest(){
-        CharacterDTO output = Mapper.parseChar(inputObject.mockEntity(), CharacterDTO.class);
+    public void parseCharToDTOTest(){
+        CharacterDTO output = Mapper.parseChar(inputChar.mockEntity(), CharacterDTO.class);
         assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("Test Username", output.getAccountUsername());
         assertEquals("Test username0", output.getName());
@@ -47,8 +51,8 @@ public class MapperConverterTest {
     }
 
     @Test
-    public void parseEntityListToDTOListTest(){
-        List<CharacterDTO> outputList = Mapper.parseListChar(inputObject.mockEntityList(), CharacterDTO.class);
+    public void parseCharListToDTOListTest(){
+        List<CharacterDTO> outputList = Mapper.parseListChar(inputChar.mockEntityList(), CharacterDTO.class);
         CharacterDTO outputZero = outputList.get(0);
         assertEquals(Long.valueOf(0L), outputZero.getId());
         assertEquals("Test Username", outputZero.getAccountUsername());
@@ -121,4 +125,43 @@ public class MapperConverterTest {
         assertEquals("Test Weapon7", outputSeven.getWeapon());
         assertEquals("Test Treasure7", outputSeven.getTreasure());
     }
+
+    @Test
+    public void parseUserToDTOTest(){
+        UserDTO output = Mapper.parseUser(inputUser.mockEntity(), UserDTO.class);
+        assertEquals(Long.valueOf(1L), output.getId());
+        assertEquals("Test username1", output.getUser_name());
+        assertEquals("Test password1", output.getPassword());
+        assertEquals("Test name1", output.getName());
+        assertEquals("Test email1", output.getEmail());
+        assertEquals(Integer.valueOf(1), output.getAge());
+    }
+    @Test
+    public void parseUserListToDTOListTest() {
+        List<UserDTO> outputList = Mapper.parseListChar(inputUser.mockEntityList(), UserDTO.class);
+        UserDTO outputOne = outputList.get(1);
+        assertEquals(Long.valueOf(1L), outputOne.getId());
+        assertEquals("Test username1", outputOne.getUser_name());
+        assertEquals("Test password1", outputOne.getPassword());
+        assertEquals("Test name1", outputOne.getName());
+        assertEquals("Test email1", outputOne.getEmail());
+        assertEquals(Integer.valueOf(1), outputOne.getAge());
+
+        UserDTO outputTwo = outputList.get(2);
+        assertEquals(Long.valueOf(2L), outputTwo.getId());
+        assertEquals("Test username2", outputTwo.getUser_name());
+        assertEquals("Test password2", outputTwo.getPassword());
+        assertEquals("Test name2", outputTwo.getName());
+        assertEquals("Test email2", outputTwo.getEmail());
+        assertEquals(Integer.valueOf(2), outputTwo.getAge());
+
+        UserDTO outputFour = outputList.get(4);
+        assertEquals(Long.valueOf(4L), outputFour.getId());
+        assertEquals("Test username4", outputFour.getUser_name());
+        assertEquals("Test password4", outputFour.getPassword());
+        assertEquals("Test name4", outputFour.getName());
+        assertEquals("Test email4", outputFour.getEmail());
+        assertEquals(Integer.valueOf(4), outputFour.getAge());
+    }
 }
+
