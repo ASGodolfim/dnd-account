@@ -125,4 +125,16 @@ public class CharacterServicesTest {
         assertEquals("Test Weapon1", result.getWeapon());
         assertEquals("Test Treasure1", result.getTreasure());
     }
+
+    @Test
+    void updateWithNullCharacter(){
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+            services.update(null);
+        });
+
+        String expectedMessage = "Object Is Null";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 }
