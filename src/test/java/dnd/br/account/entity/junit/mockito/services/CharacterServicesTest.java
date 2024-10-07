@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,7 +42,6 @@ public class CharacterServicesTest {
     @Test
     void create() throws Exception {
         Character persisted = input.mockEntity(1);
-        persisted.setId(1L);
 
         CharacterDTO dto = input.mockDTO(1);
         dto.setId(1L);
@@ -54,7 +52,7 @@ public class CharacterServicesTest {
 
         assertNotNull(result);
         assertEquals("Test Username", result.getAccountUsername());
-        assertEquals("Test username1", result.getName());
+        assertEquals("Test name1", result.getName());
         assertEquals(Integer.valueOf(1), result.getStrength());
         assertEquals(Integer.valueOf(1), result.getConstitution());
         assertEquals(Integer.valueOf(1), result.getDexterity());
@@ -65,7 +63,7 @@ public class CharacterServicesTest {
         assertEquals("Test Subclass1", result.getSubclass());
         assertEquals(Integer.valueOf(1), result.getClassLevel());
         assertEquals(false, result.getMulticlass());
-        assertEquals("Test Multiclass1", result.getCharacterMulticlass());
+        assertEquals("Test multiclass1", result.getCharacterMulticlass());
         assertEquals("Test multiclass subclass1", result.getMulticlassSubclass());
         assertEquals(Integer.valueOf(1), result.getMulticlassLevel());
         assertEquals(Integer.valueOf(1), result.getLife());
@@ -92,19 +90,16 @@ public class CharacterServicesTest {
     void update() throws Exception {
         var entity = input.mockEntity(1);
 
-        Character persisted = entity;
-        persisted.setId(1L);
-
         CharacterDTO dto = input.mockDTO(1);
 
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
-        when(repository.save(any(Character.class))).thenReturn(persisted);
+        when(repository.save(any(Character.class))).thenReturn(entity);
 
         CharacterDTO result = services.update(dto);
 
         assertNotNull(result);
         assertEquals("Test Username", result.getAccountUsername());
-        assertEquals("Test username1", result.getName());
+        assertEquals("Test name1", result.getName());
         assertEquals(Integer.valueOf(1), result.getStrength());
         assertEquals(Integer.valueOf(1), result.getConstitution());
         assertEquals(Integer.valueOf(1), result.getDexterity());
@@ -115,10 +110,10 @@ public class CharacterServicesTest {
         assertEquals("Test Subclass1", result.getSubclass());
         assertEquals(Integer.valueOf(1), result.getClassLevel());
         assertEquals(false, result.getMulticlass());
-        assertEquals("Test Multiclass1", result.getCharacterMulticlass());
-        assertEquals("Test multiclass subclass1", result.getMulticlassSubclass());
-        assertEquals(Integer.valueOf(1), result.getMulticlassLevel());
-        assertEquals(Integer.valueOf(1), result.getLife());
+        assertNull(result.getCharacterMulticlass());
+        assertNull(result.getMulticlassSubclass());
+        assertEquals(Integer.valueOf(0), result.getMulticlassLevel());
+        assertEquals(Integer.valueOf(7), result.getLife());
         assertEquals(Integer.valueOf(1), result.getArmorClass());
         assertEquals(Integer.valueOf(1), result.getGold());
         assertEquals("Test Armor1", result.getArmor());
@@ -157,7 +152,7 @@ public class CharacterServicesTest {
         var result = services.findById(1L);
         assertNotNull(result);
         assertEquals("Test Username", result.getAccountUsername());
-        assertEquals("Test username1", result.getName());
+        assertEquals("Test name1", result.getName());
         assertEquals(Integer.valueOf(1), result.getStrength());
         assertEquals(Integer.valueOf(1), result.getConstitution());
         assertEquals(Integer.valueOf(1), result.getDexterity());
@@ -168,7 +163,7 @@ public class CharacterServicesTest {
         assertEquals("Test Subclass1", result.getSubclass());
         assertEquals(Integer.valueOf(1), result.getClassLevel());
         assertEquals(false, result.getMulticlass());
-        assertEquals("Test Multiclass1", result.getCharacterMulticlass());
+        assertEquals("Test multiclass1", result.getCharacterMulticlass());
         assertEquals("Test multiclass subclass1", result.getMulticlassSubclass());
         assertEquals(Integer.valueOf(1), result.getMulticlassLevel());
         assertEquals(Integer.valueOf(1), result.getLife());
@@ -178,6 +173,4 @@ public class CharacterServicesTest {
         assertEquals("Test Weapon1", result.getWeapon());
         assertEquals("Test Treasure1", result.getTreasure());
     }
-
-    
 }
