@@ -101,4 +101,21 @@ public class UserServicesTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+    @Test
+    void findByUsername() throws Exception{
+        User entity = input.mockEntity(1);
+
+        when(repository.findByUsername("Test username1")).thenReturn(entity);
+
+        var result = services.findByUsername("Test username1");
+
+        assertNotNull(result);
+        assertEquals(Long.valueOf(1L), result.getId());
+        assertEquals("Test username1", result.getUser_name());
+        assertEquals("Test password1", result.getPassword());
+        assertEquals("Test name1", result.getName());
+        assertEquals("Test email1", result.getEmail());
+        assertEquals(Integer.valueOf(1), result.getAge());
+    }
 }
