@@ -58,18 +58,23 @@ public class CharacterServices {
         int conmodifier = -1;
         switch (entity.getConstitution()){
             case 10:
+            case 11:
                 conmodifier = 0;
                 break;
             case 12:
+            case 13:
                 conmodifier = 1;
                 break;
             case 14:
+            case 15:
                 conmodifier = 2;
                 break;
             case 16:
+            case 17:
                 conmodifier = 3;
                 break;
             case 18:
+            case 19:
                 conmodifier = 4;
                 break;
             case 20:
@@ -81,7 +86,7 @@ public class CharacterServices {
 
         var dto = new CharacterDTO();
         dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
-
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
@@ -120,18 +125,23 @@ public class CharacterServices {
         int conmodifier = -1;
         switch (entity.getConstitution()){
             case 10:
+            case 11:
                 conmodifier = 0;
                 break;
             case 12:
+            case 13:
                 conmodifier = 1;
                 break;
             case 14:
+            case 15:
                 conmodifier = 2;
                 break;
             case 16:
+            case 17:
                 conmodifier = 3;
                 break;
             case 18:
+            case 19:
                 conmodifier = 4;
                 break;
             case 20:
@@ -142,6 +152,7 @@ public class CharacterServices {
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
         String user = entity.getName();
         var dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
@@ -151,6 +162,7 @@ public class CharacterServices {
 
         var entity = repository.findById(id).orElseThrow(() -> new NotFoundExeption("Nothing Found"));
         CharacterDTO dto = Mapper.parseChar(entity, CharacterDTO.class);
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
@@ -158,7 +170,7 @@ public class CharacterServices {
         Character entity = repository.findByUsernameAndName(username, name);
         if (entity == null) throw new NotFoundExeption("Nothing Found");
         var dto = Mapper.parseChar(entity, CharacterDTO.class);
-        dto.getL
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
