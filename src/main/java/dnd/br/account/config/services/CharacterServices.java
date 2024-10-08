@@ -80,7 +80,6 @@ public class CharacterServices {
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
 
         var dto = new CharacterDTO();
-        var user = entity;
         dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
 
         return dto;
@@ -159,6 +158,7 @@ public class CharacterServices {
         Character entity = repository.findByUsernameAndName(username, name);
         if (entity == null) throw new NotFoundExeption("Nothing Found");
         var dto = Mapper.parseChar(entity, CharacterDTO.class);
+        dto.getL
         return dto;
     }
 
@@ -177,6 +177,9 @@ public class CharacterServices {
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 "asc")).withSelfRel();
+        charPage.map(c -> c.add(
+                linkTo(methodOn(CharacterController.class)).withSelfRel()
+        ));
         return assembler.toModel(charPage, link);
     }
 
@@ -186,6 +189,7 @@ public class CharacterServices {
 
         var chars = repository.findAll(pageable);
         var dto = chars.map(c -> Mapper.parseChar(c, CharacterDTO.class));
+        dto.map(c -> c.add(linkTo(methodOn(CharacterController.class)).withSelfRel()));
         Link link = linkTo(methodOn(CharacterController.class).findAll(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),

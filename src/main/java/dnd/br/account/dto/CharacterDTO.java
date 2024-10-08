@@ -8,7 +8,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Getter
 @Setter
 @JsonPropertyOrder({"account_username","name","strength","constitution", "dexterity", "wisdom","intelligence","charisma","character_level","character_class","subclass","class_level","multiclass", "character_multiclass", "multiclass_subclass", "multiclass_level", "life", "armor_class", "gold", "armor", "weapon", "treasure"})
-public class CharacterDTO {
+public class CharacterDTO extends RepresentationModel<CharacterDTO> {
 
 
     private long id;
