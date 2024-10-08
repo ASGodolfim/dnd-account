@@ -69,7 +69,6 @@ public class CharacterController {
     @DeleteMapping(value = "/c/{id}")
     @Operation(summary = "Deletes by id", description = "Deletes an existing character by id", tags = "Character")
     public ResponseEntity delete(@PathVariable(value = "id") Long id) throws Exception{
-
         return services.delete(id);
     }
 }
