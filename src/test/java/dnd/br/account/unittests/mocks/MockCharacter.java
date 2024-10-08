@@ -2,6 +2,8 @@ package dnd.br.account.unittests.mocks;
 
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
+import org.springframework.data.domain.Page;
+
 import java.util.ArrayList;
 import java.util.List;
 

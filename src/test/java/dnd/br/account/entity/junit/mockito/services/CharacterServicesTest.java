@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -177,12 +178,14 @@ public class CharacterServicesTest {
     }
 
     @Test
-    void findAll(){
+    void findAll(Pageable pageable){
         List<Character> entityList = input.mockEntityList();
 
         when(repository.findAll()).thenReturn(entityList);
 
-        var characters = services.findAll();
+        var characters = services.findAll(pageable);
+
+
 
         assertNotNull(characters);
         assertEquals(11, characters.size());
@@ -298,7 +301,7 @@ public class CharacterServicesTest {
 
         when(repository.findAll()).thenReturn(entityList);
 
-        var characters = services.findByAccountUsername("Test Username");
+        var characters = services.findByAccountUsername("Test Username", pageable);
 
         assertNotNull(characters);
         assertEquals(11, characters.size());

@@ -42,6 +42,7 @@ public class UserServicesTest {
     @Test
     void create() throws Exception{
         User persisted = input.mockEntity(1);
+        persisted.setId(1L);
 
         UserDTO dto = input.mockDTO(1);
 
@@ -105,6 +106,7 @@ public class UserServicesTest {
     @Test
     void findByUsername() throws Exception{
         User entity = input.mockEntity(1);
+        entity.setId(1L);
 
         when(repository.findByUsername("Test username1")).thenReturn(entity);
 
