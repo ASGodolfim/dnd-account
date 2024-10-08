@@ -156,11 +156,15 @@ public class CharacterServicesTest {
     @Test
     void findById() throws Exception{
         Character entity = input.mockEntity(1);
+        entity.setId(1L);
 
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
 
         var result = services.findById(1L);
         assertNotNull(result);
+        assertNotNull(result.getLinks());
+        System.out.println(result.toString());
+        assertTrue(result.toString().contains("links: [</api/c/1>;rel=\"self\"]"));
         assertEquals("Test Username", result.getAccountUsername());
         assertEquals("Test name1", result.getName());
         assertEquals(Integer.valueOf(1), result.getStrength());
