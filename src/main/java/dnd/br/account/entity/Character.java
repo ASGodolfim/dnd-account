@@ -108,7 +108,7 @@ public class Character{
     public int hashCode() {
         return Objects.hash(id, accountUsername, name, strength, constitution, dexterity, wisdom, intelligence, charisma, characterLevel, characterClass, subclass, classLevel, multiclass, characterMulticlass, multiclassSubclass, multiclassLevel, life, armorClass, gold, armor, weapon, treasure);
     }
-
+/*
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_characters", joinColumns = {@JoinColumn(name = "name")},
             inverseJoinColumns = {@JoinColumn(name = "user_character")})
@@ -121,5 +121,5 @@ public class Character{
         }
         return user_character;
     }
-
+*/
 }
