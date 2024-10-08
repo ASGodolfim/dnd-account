@@ -62,7 +62,9 @@ public class CharacterController {
     @Operation(summary = "Find All Characters", description = "find All Characters Created", tags = "Character")
     public ResponseEntity<Page<CharacterDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                       @RequestParam(value = "limit", defaultValue = "12") Integer limit){
+
         Pageable pageable = PageRequest.of(page,limit);
+
         return ResponseEntity.ok(services.findAll(pageable));
     }
 

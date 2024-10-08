@@ -8,6 +8,9 @@ import dnd.br.account.exeptions.RequiredObjectIsNullException;
 import dnd.br.account.config.map.Mapper;
 import dnd.br.account.config.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -147,20 +150,26 @@ public class CharacterServices {
         return dto;
     }
 
-    public List<CharacterDTO> findByAccountUsername (String accountUsername) {
+    public Page<CharacterDTO> findByAccountUsername (String accountUsername, Pageable pageable) {
 
         logger.info("Find all characters of an account by username");
 
-        var chars = Mapper.parseListChar(repository.findAll(), CharacterDTO.class).stream().filter(c -> c.getAccountUsername().equals(accountUsername)).collect(Collectors.toList());
-        return chars;
+        List<Character> chars = repository.findAll().stream().filter(c -> c.getAccountUsername().equals(accountUsername)).collect(Collectors.toList());;
+        List<CharacterDTO> dto = Mapper.parseListChar(chars, CharacterDTO.class);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), dto.size());
+
+        List<CharacterDTO> pageContent = dto.subList(start, end);
+        return new PageImpl<>(pageContent, pageable, dto.size());
     }
 
-    public List<CharacterDTO> findAll(){
+    public Page<CharacterDTO> findAll(Pageable pageable){
 
         logger.info("Finding all the Characters!");
 
-        var chars = Mapper.parseListChar(repository.findAll(), CharacterDTO.class);
-        return chars;
+        var chars = repository.findAll(pageable);
+        var dto = chars.map(c -> Mapper.parseChar(c, CharacterDTO.class));
+        return dto;
     }
 
     public ResponseEntity delete (Long id){
