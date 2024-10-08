@@ -1,11 +1,14 @@
 package dnd.br.account.entity.junit.mockito.services;
 
+import dnd.br.account.config.map.Mapper;
 import dnd.br.account.config.repository.CharacterRepository;
 import dnd.br.account.config.services.CharacterServices;
+import dnd.br.account.controller.CharacterController;
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
 import dnd.br.account.exeptions.RequiredObjectIsNullException;
 import dnd.br.account.unittests.mocks.MockCharacter;
+import dnd.br.account.unittests.wrappers.WrapperCharacterDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -14,7 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +27,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -179,18 +186,18 @@ public class CharacterServicesTest {
 
     @Test
     void findAll(Pageable pageable){
+
         List<Character> entityList = input.mockEntityList();
 
         when(repository.findAll()).thenReturn(entityList);
 
         var characters = services.findAll(pageable);
 
-
-
         assertNotNull(characters);
-        assertEquals(11, characters.size());
+        assertEquals(11, characters.getContent().size());
 
-        var characterOne = characters.get(1);
+        var charOne = characters.getContent().stream().toList().get(1);
+        var characterOne = charOne.getContent();
         assertNotNull(characterOne);
         assertEquals("Test Username", characterOne.getAccountUsername());
         assertEquals("Test name1", characterOne.getName());
@@ -214,7 +221,8 @@ public class CharacterServicesTest {
         assertEquals("Test Weapon1", characterOne.getWeapon());
         assertEquals("Test Treasure1", characterOne.getTreasure());
 
-        var characterFour = characters.get(4);
+        var charFour = characters.getContent().stream().toList().get(4);
+        var characterFour = charFour.getContent();
         assertNotNull(characterFour);
         assertEquals("Test Username", characterFour.getAccountUsername());
         assertEquals("Test name4", characterFour.getName());
@@ -238,7 +246,8 @@ public class CharacterServicesTest {
         assertEquals("Test Weapon4", characterFour.getWeapon());
         assertEquals("Test Treasure4", characterFour.getTreasure());
 
-        var characterEight = characters.get(8);
+        var charEight = characters.getContent().stream().toList().get(8);
+        var characterEight = charEight.getContent();
         assertNotNull(characterEight);
         assertEquals("Test Username", characterEight.getAccountUsername());
         assertEquals("Test name8", characterEight.getName());
@@ -296,7 +305,7 @@ public class CharacterServicesTest {
     }
 
     @Test
-    public void findByUsername(){
+    public void findByUsername(Pageable pageable){
         List<Character> entityList = input.mockEntityList();
 
         when(repository.findAll()).thenReturn(entityList);
@@ -304,9 +313,10 @@ public class CharacterServicesTest {
         var characters = services.findByAccountUsername("Test Username", pageable);
 
         assertNotNull(characters);
-        assertEquals(11, characters.size());
+        assertEquals(11, characters.getContent().size());
 
-        var characterOne = characters.get(1);
+        var charOne = characters.getContent().stream().toList().get(1);
+        var characterOne = charOne.getContent();
         assertNotNull(characterOne);
         assertEquals("Test Username", characterOne.getAccountUsername());
         assertEquals("Test name1", characterOne.getName());
@@ -330,7 +340,8 @@ public class CharacterServicesTest {
         assertEquals("Test Weapon1", characterOne.getWeapon());
         assertEquals("Test Treasure1", characterOne.getTreasure());
 
-        var characterFour = characters.get(4);
+        var charFour = characters.getContent().stream().toList().get(4);
+        var characterFour = charFour.getContent();
         assertNotNull(characterFour);
         assertEquals("Test Username", characterFour.getAccountUsername());
         assertEquals("Test name4", characterFour.getName());
@@ -354,7 +365,8 @@ public class CharacterServicesTest {
         assertEquals("Test Weapon4", characterFour.getWeapon());
         assertEquals("Test Treasure4", characterFour.getTreasure());
 
-        var characterEight = characters.get(8);
+        var charEight = characters.getContent().stream().toList().get(8);
+        var characterEight = charEight.getContent();
         assertNotNull(characterEight);
         assertEquals("Test Username", characterEight.getAccountUsername());
         assertEquals("Test name8", characterEight.getName());
