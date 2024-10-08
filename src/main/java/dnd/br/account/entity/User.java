@@ -65,8 +65,7 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(id, user_name, password, name, email, age, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
     }
-
-/*
+    /*
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_characters", joinColumns = {@JoinColumn(name = "user_name")},
             inverseJoinColumns = {@JoinColumn(name = "account_username")})
@@ -78,8 +77,7 @@ public class User implements UserDetails {
             user_character.add(character.getName());
         }
         return user_character;
-    }
- */
+    }*/
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission", joinColumns = {@JoinColumn(name = "id_user")},

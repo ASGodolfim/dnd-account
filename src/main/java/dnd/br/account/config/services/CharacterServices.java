@@ -8,10 +8,14 @@ import dnd.br.account.exeptions.RequiredObjectIsNullException;
 import dnd.br.account.config.map.Mapper;
 import dnd.br.account.config.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -67,7 +71,6 @@ public class CharacterServices {
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
 
         var dto = new CharacterDTO();
-        var user = entity;
         dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
 
         return dto;
@@ -131,9 +134,7 @@ public class CharacterServices {
             default:
         }
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
-        String user = entity.getName();
-        var dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
-        return dto;
+        return Mapper.parseChar(repository.save(entity), CharacterDTO.class);
     }
 
     public CharacterDTO findById (Long id) throws Exception {
@@ -141,31 +142,35 @@ public class CharacterServices {
         logger.info("Find a character by id");
 
         var entity = repository.findById(id).orElseThrow(() -> new NotFoundExeption("Nothing Found"));
-        CharacterDTO dto = Mapper.parseChar(entity, CharacterDTO.class);
-        return dto;
+        return Mapper.parseChar(entity, CharacterDTO.class);
     }
 
     public CharacterDTO FindByUsernameAndName(String username, String name) throws Exception{
         Character entity = repository.findByUsernameAndName(username, name);
         if (entity == null) throw new NotFoundExeption("Nothing Found");
-        var dto = Mapper.parseChar(entity, CharacterDTO.class);
-        return dto;
+        return Mapper.parseChar(entity, CharacterDTO.class);
     }
 
-    public List<CharacterDTO> findByAccountUsername (String accountUsername) {
+
+    public Page<CharacterDTO> findByAccountUsername (String accountUsername, Pageable pageable) {
 
         logger.info("Find all characters of an account by username");
 
-        var chars = Mapper.parseListChar(repository.findAll(), CharacterDTO.class).stream().filter(c -> c.getAccountUsername().equals(accountUsername)).collect(Collectors.toList());
-        return chars;
+        List<Character> characters = repository.findAll().stream().filter(c -> c.getAccountUsername().equals(accountUsername)).toList();;
+        var charPageDto = Mapper.parseListChar(characters, CharacterDTO.class);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), charPageDto.size());
+        List<CharacterDTO> pageContent = charPageDto.subList(start, end);
+        return new PageImpl<>(pageContent, pageable, charPageDto.size());
     }
 
-    public List<CharacterDTO> findAll(){
+    public Page<CharacterDTO> findAll(Pageable pageable){
 
         logger.info("Finding all the Characters!");
 
-        var chars = Mapper.parseListChar(repository.findAll(), CharacterDTO.class);
-        return chars;
+        var charPage = repository.findAll(pageable);
+
+        return charPage.map(c -> Mapper.parseChar(c, CharacterDTO.class));
     }
 
     public ResponseEntity delete (Long id){

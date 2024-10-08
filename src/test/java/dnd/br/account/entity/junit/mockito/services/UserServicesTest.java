@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -40,6 +42,7 @@ public class UserServicesTest {
     @Test
     void create() throws Exception{
         User persisted = input.mockEntity(1);
+        persisted.setId(1L);
 
         UserDTO dto = input.mockDTO(1);
 
@@ -66,5 +69,55 @@ public class UserServicesTest {
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void update() throws Exception{
+        var entity = input.mockEntity(1);
+
+        UserDTO dto = input.mockDTO(1);
+
+        when(repository.findById(1L)).thenReturn(Optional.of(entity));
+        when(repository.save(any(User.class))).thenReturn(entity);
+
+        UserDTO result = services.updateUser(dto);
+
+        assertNotNull(result);
+        assertEquals(Long.valueOf(1L), result.getId());
+        assertEquals("Test username1", result.getUser_name());
+        assertEquals("Test password1", result.getPassword());
+        assertEquals("Test name1", result.getName());
+        assertEquals("Test email1", result.getEmail());
+        assertEquals(Integer.valueOf(1), result.getAge());
+    }
+
+    @Test
+    void updateWithNullUser(){
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+            services.updateUser(null);
+        });
+
+        String expectedMessage = "Object Is Null";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void findByUsername() throws Exception{
+        User entity = input.mockEntity(1);
+        entity.setId(1L);
+
+        when(repository.findByUsername("Test username1")).thenReturn(entity);
+
+        var result = services.findByUsername("Test username1");
+
+        assertNotNull(result);
+        assertEquals(Long.valueOf(1L), result.getId());
+        assertEquals("Test username1", result.getUser_name());
+        assertEquals("Test password1", result.getPassword());
+        assertEquals("Test name1", result.getName());
+        assertEquals("Test email1", result.getEmail());
+        assertEquals(Integer.valueOf(1), result.getAge());
     }
 }
