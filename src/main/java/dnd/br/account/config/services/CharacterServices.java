@@ -1,6 +1,7 @@
 package dnd.br.account.config.services;
 
 import dnd.br.account.config.repository.UserRepository;
+import dnd.br.account.controller.CharacterController;
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
 import dnd.br.account.exeptions.NotFoundExeption;
@@ -11,11 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 @Service
 public class CharacterServices {
@@ -28,6 +37,9 @@ public class CharacterServices {
 
     @Autowired
     Mapper mapper;
+
+    @Autowired
+    PagedResourcesAssembler<CharacterDTO> assembler;
 
     private final Logger logger = Logger.getLogger(CharacterServices.class.getName());
 
@@ -150,7 +162,7 @@ public class CharacterServices {
         return dto;
     }
 
-    public Page<CharacterDTO> findByAccountUsername (String accountUsername, Pageable pageable) {
+    public PagedModel<EntityModel<CharacterDTO>> findByAccountUsername (String accountUsername, Pageable pageable) {
 
         logger.info("Find all characters of an account by username");
 
@@ -160,16 +172,25 @@ public class CharacterServices {
         int end = Math.min((start + pageable.getPageSize()), dto.size());
 
         List<CharacterDTO> pageContent = dto.subList(start, end);
-        return new PageImpl<>(pageContent, pageable, dto.size());
+        var charPage =  new PageImpl<>(pageContent, pageable, dto.size());
+        Link link = linkTo(methodOn(CharacterController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "asc")).withSelfRel();
+        return assembler.toModel(charPage, link);
     }
 
-    public Page<CharacterDTO> findAll(Pageable pageable){
+    public PagedModel<EntityModel<CharacterDTO>> findAll(Pageable pageable){
 
         logger.info("Finding all the Characters!");
 
         var chars = repository.findAll(pageable);
         var dto = chars.map(c -> Mapper.parseChar(c, CharacterDTO.class));
-        return dto;
+        Link link = linkTo(methodOn(CharacterController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "asc")).withSelfRel();
+        return assembler.toModel(dto, link);
     }
 
     public ResponseEntity delete (Long id){

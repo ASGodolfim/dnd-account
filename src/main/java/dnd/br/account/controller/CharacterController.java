@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +52,7 @@ public class CharacterController {
 
     @GetMapping(value = "/{username}/c")
     @Operation(summary = "Finds all characters of an account", description = "finds all character of an account by username", tags = "Character")
-    public ResponseEntity<Page<CharacterDTO>> findByUsername(
+    public ResponseEntity<PagedModel<EntityModel<CharacterDTO>>> findByUsername(
             @PathVariable(value = "username")String username,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "5") Integer size,
@@ -65,7 +67,7 @@ public class CharacterController {
 
     @GetMapping(value = "/c")
     @Operation(summary = "Find All Characters", description = "find All Characters Created", tags = "Character")
-    public ResponseEntity<Page<CharacterDTO>> findAll(
+    public ResponseEntity<PagedModel<EntityModel<CharacterDTO>>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "5") Integer size,
             @RequestParam(value = "direction", defaultValue = "asc") String direction){
