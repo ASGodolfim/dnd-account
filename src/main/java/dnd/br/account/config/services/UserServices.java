@@ -1,5 +1,6 @@
 package dnd.br.account.config.services;
 
+import dnd.br.account.controller.UserController;
 import dnd.br.account.dto.UserDTO;
 import dnd.br.account.entity.User;
 import dnd.br.account.exeptions.NotFoundExeption;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class UserServices implements UserDetailsService {
@@ -68,7 +72,8 @@ public class UserServices implements UserDetailsService {
         entity.setAccountNonLocked(true);
         entity.setCredentialsNonExpired(true);
         entity.setEnabled(true);
-        return Mapper.parseUser(repository.save(entity), UserDTO.class);
+        var dto = Mapper.parseUser(repository.save(entity), UserDTO.class);
+        return dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
 
 
     }
@@ -89,13 +94,15 @@ public class UserServices implements UserDetailsService {
         entity.setAge(user.getAge());
 
         var dto = Mapper.parseUser(repository.save(entity), UserDTO.class);
-        return dto;
+        return dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
     }
 
-    public User findByUsername (String username) throws UsernameNotFoundException{
+    public UserDTO findByUsername (String username) throws UsernameNotFoundException{
         User entity = repository.findByUsername(username);
         if (entity == null) throw new NotFoundExeption("User Not Found");
-        return entity;
+        var dto = Mapper.parseUser(entity, UserDTO.class);
+        dto.add(linkTo(methodOn(UserController.class)).withSelfRel());
+        return dto;
     }
 
 }

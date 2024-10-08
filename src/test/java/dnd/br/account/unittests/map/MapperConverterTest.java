@@ -1,4 +1,4 @@
-package dnd.br.account.unittests;
+package dnd.br.account.unittests.map;
 
 import dnd.br.account.config.map.Mapper;
 import dnd.br.account.dto.CharacterDTO;

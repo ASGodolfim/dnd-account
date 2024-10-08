@@ -1,6 +1,7 @@
 package dnd.br.account.config.services;
 
 import dnd.br.account.config.repository.UserRepository;
+import dnd.br.account.controller.CharacterController;
 import dnd.br.account.dto.CharacterDTO;
 import dnd.br.account.entity.Character;
 import dnd.br.account.exeptions.NotFoundExeption;
@@ -11,11 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 @Service
 public class CharacterServices {
@@ -28,6 +37,9 @@ public class CharacterServices {
 
     @Autowired
     Mapper mapper;
+
+    @Autowired
+    PagedResourcesAssembler<CharacterDTO> assembler;
 
     private final Logger logger = Logger.getLogger(CharacterServices.class.getName());
 
@@ -46,18 +58,23 @@ public class CharacterServices {
         int conmodifier = -1;
         switch (entity.getConstitution()){
             case 10:
+            case 11:
                 conmodifier = 0;
                 break;
             case 12:
+            case 13:
                 conmodifier = 1;
                 break;
             case 14:
+            case 15:
                 conmodifier = 2;
                 break;
             case 16:
+            case 17:
                 conmodifier = 3;
                 break;
             case 18:
+            case 19:
                 conmodifier = 4;
                 break;
             case 20:
@@ -68,9 +85,8 @@ public class CharacterServices {
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
 
         var dto = new CharacterDTO();
-        var user = entity;
         dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
-
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
@@ -109,18 +125,23 @@ public class CharacterServices {
         int conmodifier = -1;
         switch (entity.getConstitution()){
             case 10:
+            case 11:
                 conmodifier = 0;
                 break;
             case 12:
+            case 13:
                 conmodifier = 1;
                 break;
             case 14:
+            case 15:
                 conmodifier = 2;
                 break;
             case 16:
+            case 17:
                 conmodifier = 3;
                 break;
             case 18:
+            case 19:
                 conmodifier = 4;
                 break;
             case 20:
@@ -131,6 +152,7 @@ public class CharacterServices {
         entity.setLife(8 + conmodifier + ((entity.getCharacterLevel() - 1) * (5+conmodifier)));
         String user = entity.getName();
         var dto = Mapper.parseChar(repository.save(entity), CharacterDTO.class);
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
@@ -140,6 +162,7 @@ public class CharacterServices {
 
         var entity = repository.findById(id).orElseThrow(() -> new NotFoundExeption("Nothing Found"));
         CharacterDTO dto = Mapper.parseChar(entity, CharacterDTO.class);
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
@@ -147,10 +170,11 @@ public class CharacterServices {
         Character entity = repository.findByUsernameAndName(username, name);
         if (entity == null) throw new NotFoundExeption("Nothing Found");
         var dto = Mapper.parseChar(entity, CharacterDTO.class);
+        dto.add(linkTo(methodOn(CharacterController.class)).withSelfRel());
         return dto;
     }
 
-    public Page<CharacterDTO> findByAccountUsername (String accountUsername, Pageable pageable) {
+    public PagedModel<EntityModel<CharacterDTO>> findByAccountUsername (String accountUsername, Pageable pageable) {
 
         logger.info("Find all characters of an account by username");
 
@@ -160,16 +184,29 @@ public class CharacterServices {
         int end = Math.min((start + pageable.getPageSize()), dto.size());
 
         List<CharacterDTO> pageContent = dto.subList(start, end);
-        return new PageImpl<>(pageContent, pageable, dto.size());
+        var charPage =  new PageImpl<>(pageContent, pageable, dto.size());
+        Link link = linkTo(methodOn(CharacterController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "asc")).withSelfRel();
+        charPage.map(c -> c.add(
+                linkTo(methodOn(CharacterController.class)).withSelfRel()
+        ));
+        return assembler.toModel(charPage, link);
     }
 
-    public Page<CharacterDTO> findAll(Pageable pageable){
+    public PagedModel<EntityModel<CharacterDTO>> findAll(Pageable pageable){
 
         logger.info("Finding all the Characters!");
 
         var chars = repository.findAll(pageable);
         var dto = chars.map(c -> Mapper.parseChar(c, CharacterDTO.class));
-        return dto;
+        dto.map(c -> c.add(linkTo(methodOn(CharacterController.class)).withSelfRel()));
+        Link link = linkTo(methodOn(CharacterController.class).findAll(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                "asc")).withSelfRel();
+        return assembler.toModel(dto, link);
     }
 
     public ResponseEntity delete (Long id){

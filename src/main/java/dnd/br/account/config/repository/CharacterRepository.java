@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long> {
 
-    @Query("SELECT c FROM Character c WHERE c.accountUsername =:accountUsername AND c.name =:name")
+    @Query("SELECT c FROM Character c WHERE c.accountUsername =:accountUsername AND c.name LIKE LOWER(CONCAT ('%',:name,'%'))")
     Character findByUsernameAndName(@Param("accountUsername") String username, @Param("name") String name);
 }

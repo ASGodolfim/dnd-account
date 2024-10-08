@@ -30,7 +30,7 @@ public class UserController {
 
     @GetMapping(value = "api/u/{username}")
     @Operation(summary = "Finds a user by Username", description = "Finds a exisiting user", tags = "User")
-    public User findByUsername (@PathVariable(value = "username") String username) throws Exception {
+    public UserDTO findByUsername (@PathVariable(value = "username") String username) throws Exception {
         return services.findByUsername(username);
     }
 
