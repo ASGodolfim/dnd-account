@@ -5,6 +5,10 @@ import dnd.br.account.config.services.CharacterServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +35,6 @@ public class CharacterController {
         return services.update(character);
     }
 
-    @GetMapping(value = "/{username}/c")
-    @Operation(summary = "Finds all characters of an account", description = "finds all character of an account by username", tags = "Character")
-    public List<CharacterDTO> findByUsername(@PathVariable(value = "username")String username) throws Exception{
-        return services.findByAccountUsername(username);
-    }
-
     @GetMapping(value = "/c/{id}")
     @Operation(summary = "Find Character by ID", description = "Finds a character by account id", tags = "Character")
     public CharacterDTO findById(@PathVariable(value = "id") Long id) throws Exception{
@@ -49,10 +47,23 @@ public class CharacterController {
         return services.FindByUsernameAndName(username, name);
     }
 
+    @GetMapping(value = "/{username}/c")
+    @Operation(summary = "Finds all characters of an account", description = "finds all character of an account by username", tags = "Character")
+    public ResponseEntity<Page<CharacterDTO>> findByUsername(@PathVariable(value = "username")String username,
+                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                             @RequestParam(value = "limit", defaultValue = "12") Integer limit) throws Exception{
+
+        Pageable pageable = PageRequest.of(page, limit);
+
+        return ResponseEntity.ok(services.findByAccountUsername(username, pageable));
+    }
+
     @GetMapping(value = "/c")
     @Operation(summary = "Find All Characters", description = "find All Characters Created", tags = "Character")
-    public List<CharacterDTO> findAll(){
-        return services.findAll();
+    public ResponseEntity<Page<CharacterDTO>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                      @RequestParam(value = "limit", defaultValue = "12") Integer limit){
+        Pageable pageable = PageRequest.of(page,limit);
+        return ResponseEntity.ok(services.findAll(pageable));
     }
 
     @DeleteMapping(value = "/c/{id}")
