@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
 @Service
 public class CharacterServices {
 
@@ -178,20 +177,20 @@ public class CharacterServices {
 
         logger.info("Find all characters of an account by username");
 
-        List<Character> chars = repository.findAll().stream().filter(c -> c.getAccountUsername().equals(accountUsername)).collect(Collectors.toList());;
+        List<Character> chars = repository.findAll().stream().filter(
+                c -> c.getAccountUsername().equals(accountUsername)).collect(Collectors.toList());;
         List<CharacterDTO> dto = Mapper.parseListChar(chars, CharacterDTO.class);
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), dto.size());
 
         List<CharacterDTO> pageContent = dto.subList(start, end);
         var charPage =  new PageImpl<>(pageContent, pageable, dto.size());
+        charPage.map(c -> c.add(
+                linkTo(methodOn(CharacterController.class)).withSelfRel()));
         Link link = linkTo(methodOn(CharacterController.class).findAll(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 "asc")).withSelfRel();
-        charPage.map(c -> c.add(
-                linkTo(methodOn(CharacterController.class)).withSelfRel()
-        ));
         return assembler.toModel(charPage, link);
     }
 
